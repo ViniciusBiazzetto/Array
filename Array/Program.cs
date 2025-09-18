@@ -1,68 +1,84 @@
-﻿
+
 class Program
 {
     static void Main(string[] args)
-    {
-        
-        Console.WriteLine("2025106346 - Anelise Alves");
+    {   
         Console.WriteLine("2025106462 - Vinícius Biazzetto");
         Console.WriteLine("2025105504  - Lucas Kauan");
         Console.WriteLine();
 
-        
-        string palavra = SortearPalavra();
-        char[] escondida = new char[palavra.Length];
+        string palavra = RetornarPalavraAleatoria(); 
+        char[] exibida = new char[palavra.Length];
 
-        for (int i = 0; i < escondida.Length; i++)
+        for (int i = 0; i < exibida.Length; i++)
         {
-            escondida[i] = '_';
+            exibida[i] = '_';
         }
 
         int tentativas = palavra.Length * 2;
         int usadas = 0;
 
-        Console.WriteLine("Palavra: " + string.Join(" ", escondida));
+        Console.WriteLine("Palavra:");
+        EscreverPalavra(exibida);
         Console.WriteLine("Tentativas: " + tentativas);
 
-        while (usadas < tentativas && new string(escondida) != palavra)
+        while (usadas < tentativas && new string(exibida) != palavra)
         {
             Console.Write("\nInforme uma letra: ");
             char letra = Console.ReadLine().ToUpper()[0];
-
-            bool achou = false;
-            for (int i = 0; i < palavra.Length; i++)
-            {
-                if (palavra[i] == letra)
-                {
-                    escondida[i] = letra;
-                    achou = true;
-                }
-            }
-
             usadas++;
-            Console.WriteLine(string.Join(" ", escondida));
 
-            if (!achou)
-            {
-                Console.WriteLine("Letra não encontrada.");
-            }
+            RetornarPalavra(palavra, exibida, letra); 
+            EscreverPalavra(exibida);
         }
 
-        if (new string(escondida) == palavra)
+        if (new string(exibida) == palavra)
         {
-            Console.WriteLine("Parabéns, você acertou! Tentativas: " + usadas);
+            Console.WriteLine("\nParabéns, você acertou! Tentativas: " + usadas);
         }
         else
         {
-            Console.WriteLine("Não foi dessa vez! A palavra era: " + palavra);
+            Console.WriteLine("\nNão foi dessa vez! A palavra era: " + palavra);
         }
     }
 
-    static string SortearPalavra()
+        static string RetornarPalavraAleatoria()
     {
-        string[] lista = { "TESTE", "GATO", "CACHORRO", "CARRO", "CASA", "ESCOLA", "AMIGO", "LIVRO", "JOGO", "FUTEBOL" };
-        Random r = new Random();
-        int indice = r.Next(0, 10);
-        return lista[indice];
+        string[] palavras = new string[10];
+        palavras[0] = "Abobora";
+        palavras[1] = "Banana";
+        palavras[2] = "Texto";
+        palavras[3] = "Dados";
+        palavras[4] = "Linha";
+        palavras[5] = "Dardo";
+        palavras[6] = "Ler";
+        palavras[7] = "Tela";
+        palavras[8] = "Teste";
+        palavras[9] = "Morder";
+
+        int indice = new Random().Next(0, 10);
+        return palavras[indice].ToUpper();
+    }
+
+    
+    static void RetornarPalavra(string palavra, char[] exibida, char letra)
+    {
+        for (int i = 0; i < palavra.Length; i++)
+        {
+            if (palavra[i] == letra)
+            {
+                exibida[i] = letra;
+            }
+        }
+    }
+
+    
+    static void EscreverPalavra(char[] exibida)
+    {
+        for (int i = 0; i < exibida.Length; i++)
+        {
+            Console.Write(exibida[i] + " ");
+        }
+        Console.WriteLine();
     }
 }
